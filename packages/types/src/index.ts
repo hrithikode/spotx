@@ -25,6 +25,13 @@ export interface Trade {
 }
 
 
+export interface UserBalance {
+  symbol: string;
+  balance: number;
+  decimals: number;
+}
+
+
 export interface CreateOrderMessage {
     type: 'CREATE_ORDER';
     data: {
