@@ -79,3 +79,9 @@ export interface OrderUpdateEvent {
         filledQuantity: number;
     }
 }
+
+export interface PriceData {
+  s: string; // symbol
+  b: string; // bid price
+  a: string; // ask price
+}
