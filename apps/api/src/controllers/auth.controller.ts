@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { prisma } from "@repo/prisma";
-import { loginSchema, registerSchema } from "../schema/auth.types";
+import { loginSchema, registerSchema } from "../schema/auth.types.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt'
 
 export const register = async (req: Request, res: Response) => {
     try {
-        const parsed = registerSchema.safeParse(req.body);
-        if (!parsed.success) {
+        const user = registerSchema.safeParse(req.body);
+        if (!user.success) {
             return res.status(400).json({
-                error: parsed.error.message,
+                error: user.error.message,
             });
         }
-
-        const { name, email, password } = parsed.data;
+        
+        const { name, email, password } = user.data;
 
         if (!name || !email || !password) {
             return res.status(400).json({
@@ -37,9 +37,9 @@ export const register = async (req: Request, res: Response) => {
                 password:hashedPassword
             },
         });
-
+        
         const token = jwt.sign({ id: newUser.id, email: newUser.email}, process.env.JWT_SECRET!, { expiresIn: "1h"});
-
+       
         res.cookie("token", token, {
             httpOnly: true,
             sameSite: "none",
@@ -47,7 +47,7 @@ export const register = async (req: Request, res: Response) => {
             maxAge: 60 * 60 * 1000
         })
 
-        res.json({
+        return res.json({
             message: "user created successfully",
             user: {
                 id: newUser.id,
@@ -103,7 +103,7 @@ export const login = async (req: Request, res: Response) => {
             maxAge: 60 * 60 * 1000
         });
 
-        res.json({
+        return res.json({
             message: "User logged In successfully",
             user: { 
                 id: loginUser.id,
@@ -123,7 +123,7 @@ export const logout = async (req: Request, res: Response) => {
             sameSite: "none",
             secure: true
         });
-        res.json({ message: "logout successfully" });
+        return res.json({ message: "logout successfully" });
     } catch (error) {
         res.status(500).json({error: " Internal server error "})
     }
