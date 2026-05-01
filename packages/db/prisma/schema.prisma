@@ -8,8 +8,25 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       String  @id @default(uuid()) @db.Uuid()
   name     String
-  email    String @unique
+  email    String  @unique
   password String
+  Asset    Asset[]
+}
+
+model Asset {
+  id       Int    @id @default(autoincrement())
+  symbol   Symbol
+  balance  Int
+  decimals Int    @default(2)
+  userId   String @db.Uuid
+  user     User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, symbol], name: "user_symbol_unique")
+}
+
+enum Symbol {
+  USDT
+  BTC
 }
