@@ -1,24 +1,19 @@
 {
-  "name": "@repo/prisma",
+  "name": "@repo/redis",
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "prisma.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^22.15.3",
-    "prisma": "^7.8.0",
-    "@repo/typescript-config": "workspace:*"
-  },
   "dependencies": {
-    "@prisma/adapter-pg": "^7.8.0",
-    "@prisma/client": "^7.8.0",
-    "dotenv": "^17.4.2",
-    "pg": "^8.20.0"
+    "ioredis": "^5.10.1"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
   }
 }
