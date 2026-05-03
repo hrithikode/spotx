@@ -7,6 +7,7 @@ import authRoutes from "./routes/auth.routes.js";
 import cookieParser from 'cookie-parser';
 import balanceRouter from './routes/balance.routes.js'
 import errorHandler from './middleware/error.middleware.js';
+import tradeRouter from './routes/trade.routes.js'
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use("/balance", balanceRouter);
+app.use('/trade', tradeRouter);
 
 
 app.use(errorHandler);
